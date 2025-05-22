@@ -23,42 +23,42 @@ const ProductList = ({ products }) => {
     };
 
     return (
-        <div className="flex flex-wrap gap-5 justify-center p-5 mx-[5rem] my-0">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-6 px-6 py-4 mx-auto">
             {products.map((product, index) => {
                 const cartItem = cart.find(item => item.id === product.id);
                 return (
                     <div
-                        className="border border-[#e0e0e0] shadow-[0_2px_5px_rgba(0,0,0,0.1)] overflow-hidden text-center transition-[transform,box-shadow] duration-300 ease-in-out w-[250px] hover:shadow-[0_2px_5px_rgba(0,0,0,0.1)] hover:transform translate-x-[-5px]"
                         key={index}
+                        className="w-full h-[400px] border border-[#e0e0e0] shadow-md overflow-hidden text-center transition-transform duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1 bg-white rounded"
                     >
-                        <Link to={`/product/${product.id}`} className="text-inherit no-underline">
+                        <Link to={`/product/${product.id}`} className="text-inherit no-underline block">
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
-                                className="h-[200px] w-[100%] object-cover"
+                                className="h-[200px] w-full object-cover"
                             />
-                            <h3 className="text-[#333] my-[10px] mx-0 text-[1.2em]">{product.name}</h3>
+                            <h3 className="text-[#333] my-2 text-lg font-semibold">{product.name}</h3>
 
-                            <p className="text-[#777] text-[0.9em] my-[10px] mx-[20px] h-[60px] overflow-hidden">
+                            <p className="text-[#777] text-sm mx-5 mb-2 h-[20px] overflow-hidden">
                                 {product.description}
                             </p>
 
-                            <span className="text-[#333] text-[1.1em] my-[10px] mx-0 block">
+                            <span className="text-[#333] text-base font-medium block mb-2">
                                 ${product.price.toFixed(2)}
                             </span>
                         </Link>
                         {cartItem ? (
-                            <div className="flex items-center justify-center my-[10px] mx-0">
+                            <div className="flex items-center justify-center mb-3">
                                 <button
                                     onClick={() => decrementItem(product)}
-                                    className="bg-[#f68b1e] border-0 rounded text-[1em] cursor-pointer my-[10px] mx-0 py-[10px] px-[20px] transition-colors duration-300 ease-in-out hover:bg-blue-600"
+                                    className="bg-[#f68b1e] text-white rounded px-4 py-2 hover:bg-blue-600 transition"
                                 >
                                     -
                                 </button>
-                                <span className="my-0 mx-[10px] text-[1.2em] text-[#333]">{cartItem.quantity}</span>
+                                <span className="mx-3 text-lg text-[#333]">{cartItem.quantity}</span>
                                 <button
                                     onClick={() => incrementItem(product)}
-                                    className="bg-[#f68b1e] border-0 rounded text-[1.2em] cursor-pointer my-[10px] mx-0 py-[10px] px-[20px] transition-colors duration-300 ease-in-out hover:bg-blue-600"
+                                    className="bg-[#f68b1e] text-white rounded px-4 py-2 hover:bg-blue-600 transition"
                                 >
                                     +
                                 </button>
@@ -66,7 +66,7 @@ const ProductList = ({ products }) => {
                         ) : (
                             <button
                                 onClick={() => addToCart(product)}
-                                className="bg-[#f68b1e] border-0 rounded text-[1em] cursor-pointer my-[10px] mx-0 py-[10px] px-[20px] transition-colors duration-300 ease-in-out hover:bg-blue-600"
+                                className="bg-[#f68b1e] text-white rounded px-6 py-2 mb-3 hover:bg-blue-600 transition"
                             >
                                 Add To Cart
                             </button>

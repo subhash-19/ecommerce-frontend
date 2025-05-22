@@ -70,7 +70,7 @@ export default class ApiService {
     }
 
     static async getProductById(productId) {
-        const response = await axios.get(`${this.BASE_URL}/product/get-by-id/${productId}`);
+        const response = await axios.get(`${this.BASE_URL}/product/get-by-product-id/${productId}`);
         return response.data;
     }
 
@@ -96,7 +96,7 @@ export default class ApiService {
     }
 
     static async getCategoryById(categoryId) {
-        const response = await axios.get(`${this.BASE_URL}/category/get-category-id/${categoryId}`);
+        const response = await axios.get(`${this.BASE_URL}/category/get-category-by-id/${categoryId}`);
         return response.data;
     }
 

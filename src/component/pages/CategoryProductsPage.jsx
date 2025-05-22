@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import ApiService from "../../service/ApiService";
 import ProductList from "../common/ProductList";
 import Pagination from "../common/Pagination";
-import ApiService from "../../service/ApiService";
 
-const Home = () => {
-    const location = useLocation();
+const CategoryProductsPage = () => {
+    const { categoryId } = useParams();
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [error, setError] = useState(null);
-    const itemsPerPage = 18;
+    const itemsPerPage = 15;
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                let allProducts = [];
-                const queryparams = new URLSearchParams(location.search);
-                const searchItem = queryparams.get("search");
-
-                if (searchItem) {
-                    const response = await ApiService.searchProducts(searchItem);
-                    allProducts = response.productList || [];
-                } else {
-                    const response = await ApiService.getAllProducts();
-                    allProducts = response.productList || [];
-                }
+                const response = await ApiService.getAllProductsByCategoryId(categoryId);
+                const allProducts = response.productList || [];
 
                 setTotalPages(Math.ceil(allProducts.length / itemsPerPage));
                 setProducts(
@@ -38,18 +29,18 @@ const Home = () => {
                 setError(
                     error.response?.data?.message ||
                     error.message ||
-                    "Unable to fetch products"
+                    "Unable to fetch products by category ID"
                 );
             }
         };
 
         fetchProducts();
-    }, [location.search, currentPage]);
+    }, [categoryId, currentPage]);
 
     return (
-        <div className="p-5 ">
+        <div className="p-5">
             {error ? (
-                <p className="text-center text-[20px] text-red-500 mt-5 ">{error}</p>
+                <p className="text-center text-[20px] text-red-500 mt-5">{error}</p>
             ) : (
                 <div>
                     <ProductList products={products} />
@@ -64,4 +55,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default CategoryProductsPage;
